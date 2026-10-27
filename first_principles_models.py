@@ -66,11 +66,16 @@ class LinearSigmoidModel(LinearModel):
 
     def calculate_output(self, input: Tensor) -> Tensor:
         """Apply the model to an input tensor."""
-        # TODO: Calculate the linear logits and apply the sigmoid activation.
-        raise NotImplementedError()
+        #Calculate the linear logits and apply the sigmoid activation.
+        logits = super().calculate_output(input)
+        return torch.sigmoid(logits)
 
     def calculate_gradients(self, input: Tensor, output: Tensor, target: Tensor) -> Tensor:
         """Calculate the gradient of the loss with respect to every model weight."""
-        # TODO: Use the MSE, sigmoid, and linear-layer derivatives to calculate d(loss)/d(weights) manually.
-        raise NotImplementedError()
+        #Use the MSE, sigmoid, and linear-layer derivatives to calculate d(loss)/d(weights) manually.
+        g_derivative = output * (1 - output) # sigmoid of g'_5(in_5)
+        delta_5 = 2 * (output - target) * g_derivative # MSE * g'_5(in_5)
+        d_loss_weights = input.t() @ delta_5 # delta_5.T @ input
+
+        return d_loss_weights
 

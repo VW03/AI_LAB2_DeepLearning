@@ -40,13 +40,39 @@ class RegressionLearner(Learner):
 
             train_loss = 0
 
-            for data, targets in dataloader:
+            for data, targets in dataloader: #batch size staat in run_linear_regeression op 32 dus 32 records/keer
                 data = data.to(device)
                 targets = targets.to(device)
 
-                # TODO: Implement the batch update step.
+                # Implement the batch update step.
 
-                loss = torch.tensor([0])
+                # De 5 vaste stappen van elke PyTorch-trainingsstap
+                # (dit is de automatische versie van wat we in deel I manueel deden)
+
+                # 1. Gradients van de vorige batch wissen.
+                #    PyTorch TELT gradients standaard OP in .grad. Zonder dit
+                #    zou elke batch de gradients van alle vorige batches erbij
+                #    krijgen en zou het model in de verkeerde richting stappen.
+                self.optimizer.zero_grad()
+
+                # 2. Forward pass: voorspelling van het model voor deze batch.
+                #    (= calculate_output in deel I)
+                outputs = self.model(data)
+
+                # 3. Loss berekenen: verschil tussen voorspelling en target
+                #    met het criterion dat in run_linear_regression.py gekozen is.
+                #    (= calculate_loss in deel I)
+                loss = self.criterion(outputs, targets)
+
+                # 4. Backward pass: autograd berekent d(loss)/d(parameter) voor
+                #    elke parameter en zet ze in parameter.grad.
+                #    (= calculate_gradients in deel I, nu automatisch)
+                loss.backward()
+
+                # 5. De optimizer past de parameters aan met die gradients
+                #    (bij SGD: w = w - learning_rate * gradient).
+                #    (= update_weights in deel I)
+                self.optimizer.step()
 
                 train_loss += loss.item() * len(data)
 
@@ -74,7 +100,21 @@ class RegressionLearner(Learner):
 
         test_loss = 0
 
-        # TODO: Compute the model's RMSE on the test dataset.
+        # Compute the model's RMSE on the test dataset.
+        dataloader = DataLoader(dataset, batch_size=32)
+
+        sum_squared_error = 0.0
+
+        for data, targets in dataloader:
+            data = data.to(device)
+            targets = targets.to(device)
+
+            outputs = self.model(data)
+
+            sum_squared_error += torch.nn.functional.mse_loss(outputs, targets, reduction="sum").item()
+
+        mse = sum_squared_error / len(dataset)
+        test_loss = math.sqrt(mse)
 
         return test_loss
 

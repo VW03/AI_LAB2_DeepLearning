@@ -4,11 +4,12 @@ import torch
 class LinearRegressionModel(torch.nn.Module):
     def __init__(self):
         super().__init__()
-        # TODO: Define the linear regression layer.
+        # Define the linear regression layer.
+        self.linear_layer = torch.nn.Linear(in_features=1, out_features=1)
 
     def forward(self, x: torch.Tensor):
-        # TODO: Implement the forward pass.
-        return x
+        # Implement the forward pass.
+        return self.linear_layer(x)
 
 
 class NeuralNetworkClassificationModel(torch.nn.Module):

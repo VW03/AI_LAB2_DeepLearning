@@ -151,9 +151,14 @@ class ClassificationLearner(Learner):
                 data = data.to(device)
                 targets = targets.to(device)
                 
-                # TODO: Implement the batch update step.
+                # Implement the batch update step.
+                self.optimizer.zero_grad()
+                outputs = self.model(data)
+                loss = self.criterion(outputs, targets)
 
-                loss = torch.tensor([0])
+                loss.backward()
+                self.optimizer.step()
+                #loss = torch.tensor([0])
 
                 train_loss += loss.item() * len(data)
 
@@ -192,9 +197,37 @@ class ClassificationLearner(Learner):
 
     @torch.no_grad()
     def _evaluate(self, dataloader, device):
-        eval_loss = 0
-        eval_accuracy = 0
+        self.model.eval()
 
-        # TODO: Compute the model's loss and accuracy over the dataset.
+        eval_loss = 0.0
+        eval_correct = 0
+        total_samples = 0
+
+        for data, targets in dataloader:
+            data = data.to(device)
+            targets = targets.to(device)
+
+            # Get predictions
+            outputs = self.model(data)
+
+            # Compute loss
+            loss = self.criterion(outputs, targets)
+
+            batch_size = targets.size(0)
+
+            # Accumulate total loss weighted by batch size
+            eval_loss += loss.item() * batch_size
+
+            # Get predicted class for each image
+            predictions = outputs.argmax(dim=1)
+
+            # Count correct predictions
+            eval_correct += (predictions == targets).sum().item()
+            total_samples += batch_size
+
+        # Calculate mean loss and accuracy over all samples
+        eval_loss /= total_samples
+        eval_accuracy = eval_correct / total_samples
 
         return (eval_loss, eval_accuracy)
+

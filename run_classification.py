@@ -44,6 +44,8 @@ transform = torchvision.transforms.Compose([
 train_dataset = torchvision.datasets.MNIST(root="./data", train=True, download=True, transform=transform)
 test_dataset = torchvision.datasets.MNIST(root="./data", train=False, download=True, transform=transform)
 
+print(train_dataset.targets.min(), train_dataset.targets.max())
+print(torch.unique(train_dataset.targets))
 print("dataset dimensions:")
 print()
 print("train data shape:", tuple(train_dataset.data.shape))
@@ -66,21 +68,18 @@ plot_images_and_labels(sample_data, sample_targets)
 
 ## MODEL DEFINITION
 
-"""START TODO: fill in the missing parts"""
+"""START: fill in the missing parts"""
 
 # create an instance of the classifier model
-
-model = None
+model = NeuralNetworkClassificationModel()
 
 # create an instance of an appropriate criterion (loss function) (see https://pytorch.org/docs/stable/nn.html#loss-functions)
-
-criterion = None
+criterion = torch.nn.CrossEntropyLoss()
 
 # create an instance of an appropriate optimizer to train the model parameters (see https://pytorch.org/docs/stable/optim.html)
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
 
-optimizer = None
-
-"""END TODO"""
+"""END"""
 
 print("neural network architecture:")
 print()

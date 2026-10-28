@@ -75,7 +75,7 @@ class LinearSigmoidModel(LinearModel):
         #Use the MSE, sigmoid, and linear-layer derivatives to calculate d(loss)/d(weights) manually.
         g_derivative = output * (1 - output) # sigmoid of g'_5(in_5)
         delta_5 = 2 * (output - target) * g_derivative # MSE * g'_5(in_5)
-        d_loss_weights = input.t() @ delta_5 # delta_5.T @ input
+        d_loss_weights = input.unsqueeze(-1) * delta_5 # shape match
 
         return d_loss_weights
 

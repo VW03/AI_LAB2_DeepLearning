@@ -14,22 +14,22 @@ class LinearModel():
 
     def init_weights(self, input_shape: Size, output_shape: Size) -> Tensor:
         """Create the model's weight tensor."""
-        # TODO: Initialize one small random weight for every input-output connection.
+        # Initialize one small random weight for every input-output connection.
         return torch.randn(*input_shape, *output_shape) * 0.01
 
     def calculate_output(self, input: Tensor) -> Tensor:
         """Apply the model to an input tensor."""
-        # TODO: Calculate the unrestricted linear output without flattening the input.
+        # Calculate the unrestricted linear output without flattening the input.
         return torch.tensordot(input, self.weights, dims=input.dim())
 
     def calculate_loss(self, output: Tensor, target: Tensor) -> Tensor:
         """Measure the discrepancy between a model output and its target."""
-        # TODO: Calculate the mean squared error.
+        # Calculate the mean squared error.
         return ((output - target) ** 2).mean()
 
     def calculate_gradients(self, input: Tensor, output: Tensor, target: Tensor) -> Tensor:
         """Calculate the gradient of the loss with respect to every model weight."""
-        # TODO: Use the MSE and linear-layer derivatives to calculate d(loss)/d(weights) manually.
+        # Use the MSE and linear-layer derivatives to calculate d(loss)/d(weights) manually.
 
         dloss_doutput = 2.0 * (output - target) / output.numel()
 
@@ -37,7 +37,7 @@ class LinearModel():
 
     def update_weights(self, gradients: Tensor, learning_rate: float) -> Tensor:
         """Update the model parameters using the supplied gradients."""
-        # TODO: Perform one gradient-descent step and return the updated weights.
+        # Perform one gradient-descent step and return the updated weights.
         self.weights = self.weights - learning_rate * gradients #Learningrate zegt hoeveel van de berekende gradient er bij komt of afgaat
         return self.weights
 

@@ -15,10 +15,11 @@ class LinearRegressionModel(torch.nn.Module):
 class NeuralNetworkClassificationModel(torch.nn.Module):
     def __init__(self):
         super().__init__()
-        # TODO: Define the three classification layers.
-        self.layer1 = torch.nn.Linear(784, 128)
-        self.layer2 = torch.nn.Linear(128, 64)
-        self.layer3 = torch.nn.Linear(64, 10)
+        # the three classification layers:
+        # each image contains (28 x 28 = 784) pixels per image -> input features = 784
+        self.layer1 = torch.nn.Linear(784, 392)
+        self.layer2 = torch.nn.Linear(392, 196)
+        self.layer3 = torch.nn.Linear(196, 10)
 
     def forward(self, x):
         x = torch.flatten(x, start_dim=1)

@@ -6,7 +6,9 @@ from data import get_logo_as_rgb_image_tensor
 from utilities import plot_scalar_image_tensor
 
 RED, GREEN, BLUE = (0, 1, 2)
-
+"""
+loss functie heeft invloed op de gradient,hoe snel en wat je leert
+"""
 # LinearModel
 linear_learning_rate = 0.0001
 image = get_logo_as_rgb_image_tensor()

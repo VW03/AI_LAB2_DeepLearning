@@ -42,20 +42,20 @@ print("test targets shape:", tuple(test_dataset.targets.shape))
 Activation function tests for NeuralNetworkClassificationModel
 ---
 torch.sigmoid:
-train results:	valid loss = 2.2652	valid accuracy = 21.82%
-test results:	test loss = 2.2644	test accuracy = 21.91%
+train results:	valid loss = 2.2437	valid accuracy = 23.06%
+test results:	test loss = 2.2420	test accuracy = 23.35%
 
 torch.relu:
-train results:	valid loss = 0.3331	valid accuracy = 90.66%
-test results:	test loss = 0.3199	test accuracy = 90.61%
+train results:	valid loss = 0.3193	valid accuracy = 91.07%
+test results:	test loss = 0.3086	test accuracy = 91.11%
 
 torch.sgn:
-train results:	valid loss = 1.1385	valid accuracy = 62.76%
-test results:	test loss = 1.1132	test accuracy = 63.71%
+train results:	valid loss = 0.6675	valid accuracy = 79.04%
+test results:	test loss = 0.6549	test accuracy = 79.73%
 
 torch.tanh:
-train results:	valid loss = 0.3388	valid accuracy = 90.46%
-test results:	test loss = 0.3295	test accuracy = 90.66%
+train results:	valid loss = 0.3282	valid accuracy = 90.67%
+test results:	test loss = 0.3184	test accuracy = 90.90%
 
--> relu because lower test loss and better validation accuracy
+-> relu because lower loss and better accuracy
 """

@@ -3,6 +3,7 @@ import torchvision
 from models import NeuralNetworkClassificationModel
 from learners import ClassificationLearner
 from utilities import plot_images_and_labels, plot_training_process
+import matplotlib.pyplot as plt
 
 ## PARAMETERS
 random_seed = 1
@@ -58,4 +59,42 @@ train results:	valid loss = 0.3282	valid accuracy = 90.67%
 test results:	test loss = 0.3184	test accuracy = 90.90%
 
 -> relu because lower loss and better accuracy
+"""
+
+#########
+
+"""
+# Tests for learning rate and epochs
+
+def run(lr, n_epochs):
+    torch.manual_seed(random_seed)                      
+    model = NeuralNetworkClassificationModel()
+    criterion = torch.nn.CrossEntropyLoss()
+    optimizer = torch.optim.SGD(model.parameters(), lr=lr)
+    learner = ClassificationLearner(model, criterion, optimizer)
+    train_losses, valid_losses, valid_accuracies = learner.train(
+        train_dataloader, valid_dataloader, n_epochs, device
+    )
+    return train_losses, valid_losses, valid_accuracies
+
+learning_rates = [0.0001, 0.001, 0.01, 0.03, 0.1, 0.3, 1]
+search_epochs = 5
+results = {}
+
+for lr in learning_rates:
+    print(f"--- learning rate {lr} ---")
+    results[lr] = run(lr, search_epochs)
+
+plt.figure(figsize=(8, 5))
+for lr, (tr, va, acc) in results.items():
+    plt.plot(range(1, len(va) + 1), va, marker="o", label=f"lr = {lr}")
+plt.xlabel("Epoch")
+plt.ylabel("Validation loss")
+plt.yscale("log")
+plt.title("Validation loss for different learning rates (batch size 64)")
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig("Classification_LR_Search.png", dpi=120)
+plt.show()
 """

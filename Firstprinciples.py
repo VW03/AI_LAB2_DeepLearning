@@ -116,9 +116,9 @@ plt.figure(figsize=(8, 5))
 for lr, losses in loss_curves.items():
     plt.plot(range(len(losses)), losses, marker="o", label=f"rate = {lr}")
 
-plt.xlabel("Update step")
-plt.ylabel("Training loss")
-plt.title("LinearSigmoidModel – Training loss for different learning rates")
+plt.xlabel("Step")
+plt.ylabel("Loss")
+plt.title("LinearSigmoidModel – Learning Rates")
 plt.legend()
 plt.grid(True, alpha=0.3)
 plt.tight_layout()

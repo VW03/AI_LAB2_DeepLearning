@@ -15,9 +15,9 @@ random_seed = 1
 batch_size_train = 64
 batch_size_test = 1000
 
-epochs = 5
+epochs = 50 #old: 5
 
-learning_rate = 0.01
+learning_rate = 0.03 #old: 0.01
 
 ## INITIALISATION
 
@@ -119,4 +119,3 @@ model.to(torch.device("cpu"))
 sample_data, sample_targets = next(iter(test_dataloader))
 sample_predictions = torch.argmax(model(sample_data), dim=1)
 plot_images_and_labels(sample_data, sample_targets, sample_predictions)
-
